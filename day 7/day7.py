@@ -34,24 +34,24 @@ workingDir = root
 allFolders = [root]
 
 for line in data[1:]: # skip initial cd
-if line.startswith("$"):
-  # is a command
-  if line.startswith("$ cd "):
-    destination = line.split(" ")[2]
-    if destination == "..":
-      workingDir = workingDir.parent
-    else:
-      workingDir = workingDir.subfolders[destination]
-  elif line.startswith("$ ls "):
-    pass # do nothing here
-else:
-  # is a file
-  if line.startswith("dir"):
-    newFolder = workingDir.addSubFolder(line.split(" ")[1])
-    allFolders.append(newFolder)
+  if line.startswith("$"):
+    # is a command
+    if line.startswith("$ cd "):
+      destination = line.split(" ")[2]
+      if destination == "..":
+        workingDir = workingDir.parent
+      else:
+        workingDir = workingDir.subfolders[destination]
+    elif line.startswith("$ ls "):
+      pass # do nothing here
   else:
-    fSize, fName = line.split(" ")
-    workingDir.addFile(fName, int(fSize))
+    # is a file
+    if line.startswith("dir"):
+      newFolder = workingDir.addSubFolder(line.split(" ")[1])
+      allFolders.append(newFolder)
+    else:
+      fSize, fName = line.split(" ")
+      workingDir.addFile(fName, int(fSize))
     
 print("All small folders:", sum([x.folderSize() for x in allFolders if x.isSmall()]))
 print()
