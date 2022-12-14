@@ -70,6 +70,7 @@ shortestPath = part1
 bestStart = start
 
 allACells = [c for c in cells.keys() if cells[c] == 0]
+
 for aCell in allACells:
     dist = findPath(aCell)
     if dist < shortestPath:
